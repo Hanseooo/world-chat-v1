@@ -85,6 +85,9 @@ body {
 #navSpacer {
   height: 5vh;
 }
+#navContainer {
+  backdrop-filter: blur(4px);
+}
 
 @media  (max-width: 500px) {
   .messageBubble {
