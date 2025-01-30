@@ -75,7 +75,7 @@ function ChatRoom({ username }) {
     const [message, setMessage] = useState('')
     const [lastMessageId, setLastMessageId] = useState(null);
 
-    const messagesQuery = query(messageCollectionRef, orderBy('createdAt'), limit(25))
+    const messagesQuery = query(messageCollectionRef, orderBy('createdAt'))
     const [retrievedDocs = []] = useCollectionData(messagesQuery, {idField: 'id'})
 
     useEffect(() => {
