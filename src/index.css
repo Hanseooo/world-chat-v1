@@ -1,0 +1,94 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", serif;
+  font-optical-sizing: auto;
+  scrollbar-width: none;
+}
+
+body, #usernameFormContainer, .selfBubble {
+  background: linear-gradient(75deg, rgb(0, 0, 104), rgb(0, 6, 178), rgb(0, 0, 104));
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+body {
+  background: linear-gradient(75deg, rgb(0, 0, 104), rgb(0, 6, 178), rgb(0, 0, 104));
+  min-width: 300px;
+  /* background: linear-gradient(60deg, rgb(33, 33, 49), rgb(0, 0, 117), rgb(40, 40, 57)); */
+}
+
+.selfBubble {
+  background: linear-gradient(75deg, rgb(20, 20, 65), rgb(14, 17, 83), rgb(20, 20, 65));
+
+}
+
+
+#heroContainer, #chatRoomContainer {
+  color: white;
+  width: 100vw;
+  height: 100vh;
+}
+#heroContainer, #chatRoomContainer {
+  margin-top: -8vh;
+}
+
+#invalidName {
+  top: 120%;
+}
+
+.btn1 {
+  max-width: 115px;
+}
+.btn1:hover {
+  background-color: whitesmoke !important;
+}
+
+#usernameTextbox {
+  max-width: 400px;
+  min-width: 300px;
+  width: 45vw;
+}
+#usernameFormContainer {
+  width: 50vw;
+  max-width: 450px;
+  min-width: 350px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+.messageBubble {
+  /* max-width: 650px;
+  min-width: 250px; */
+  width: clamp(650px, fit-content, 250px);
+}
+#messageContainer {
+  height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.bubbleUsernameHeader {
+  margin-right: 20px;
+}
+
+#charIndicator {
+  font-size: 0.8rem;
+}
+
+.navBtn {
+  margin-top: -5px;
+}
+
+#navSpacer {
+  height: 5vh;
+}
+
+@media  (max-width: 500px) {
+  .messageBubble {
+    max-width: 250px;
+  }
+}
+
