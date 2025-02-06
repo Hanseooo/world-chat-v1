@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import UsernameForm from './usernameForm.jsx';
 import ChatRoom from './ChatRoom.jsx';
 import Navigation from './Navigation.jsx';
+import About from './About.jsx';
 
 
 
@@ -57,6 +58,7 @@ const handleChangeView = (view) => {
   {activeView === 'home' && <HeroSection onGetStarted = {handleShowForm} />}
   {showForm && <UsernameForm onClose = {handleHideForm} onSubmit = {handleUsernameSubmit} />}
   {activeView === 'chat' && isUserInfoAvailable() && <ChatRoom username = {username}/>}
+  {activeView === 'about' && <About />}
   </>
  )
 }

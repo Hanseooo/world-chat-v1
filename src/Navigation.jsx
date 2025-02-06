@@ -1,18 +1,28 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PropTypes from 'prop-types';
+import { Container, Navbar, Nav } from 'react-bootstrap'
 
 
 function Navigation({ onChangeView }) {
 
     return(
-        <div id='navContainer' className='mb-2 d-flex justify-content-between border-bottom p-2 py-2 sticky-top mt-2'>
-        <a className='fw-semibold text-decoration-none text-light fs-5 px-2' href='#'>World Chat</a>
-        <div className=''>
-        <button onClick={() => onChangeView('home')} className='btn btn-link text-light text-decoration-none navBtn'>Home</button>
-        <button onClick={() => onChangeView('chat')} className='btn btn-link text-light text-decoration-none navBtn'>Chat</button>
-        </div>
-    </div>
-    )
+        <Navbar fluid id='navContainer' className='border-bottom py-2 sticky-top px-2 px-sm-4' expand="sm">
+            <Container className='d-flex justify-content-between'>
+                <Navbar.Brand className='fw-semibold text-decoration-none text-light fs-5' href='#'>World Chat</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" className="text-white border-0"><span class="material-symbols-outlined">
+menu
+</span> </Navbar.Toggle>
+            </Container>
+            <Navbar.Collapse id="basic-navbar-nav" className='text-end px-4'> 
+                <Nav className='ml-auto'> 
+                    <Nav.Link onClick={() => onChangeView('home')} className='text-light'>Home</Nav.Link>
+                    <Nav.Link onClick={() => onChangeView('chat')} className='text-light'>Chat</Nav.Link>
+                    <Nav.Link onClick={() => onChangeView('about')} className='text-light'>About</Nav.Link>
+                </Nav>
+            </Navbar.Collapse>
+        </Navbar>
+    );
+    
 }
 
 Navigation.propTypes = {

@@ -2,8 +2,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Button, Form, InputGroup } from 'react-bootstrap';
 import MyMsgBubble from './MyMsgBubble.jsx';
 import MsgBubble from './MsgBubble';
-import UserNotif from './userNotif.jsx';
-import Navigation from './Navigation.jsx';
 import { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import popAlertSound from './assets/pop-alert.mp3'
@@ -44,7 +42,6 @@ let name;
 function ChatRoom({ username }) {
     document.querySelector('body').style.background = 'linear-gradient(60deg, rgb(33, 33, 49), rgb(17, 17, 69), rgb(40, 40, 57))'
     name = username
-    const popAlert = new Audio(popAlertSound)
 
     useEffect(() => {
         let userInfo;
@@ -74,6 +71,8 @@ function ChatRoom({ username }) {
     //const [retrievedDocs, setRetrievedDocs] = useState([]);
     const [message, setMessage] = useState('')
     const [lastMessageId, setLastMessageId] = useState(null);
+    const [isChatCooldown, setIsChatCooldown] = useState(true)
+
 
     const messagesQuery = query(messageCollectionRef, orderBy('createdAt'))
     const [retrievedDocs = []] = useCollectionData(messagesQuery, {idField: 'id'})
@@ -82,11 +81,16 @@ function ChatRoom({ username }) {
         // if (messageContainerRef.current) {
         //     messageContainerRef.current.scrollIntoView({behavior: 'smooth'})
         // }
+        const popAlert = new Audio(popAlertSound)
         const container = document.getElementById('messageContainer');
         if (container) {
             container.scrollTop = container.scrollHeight; // Scroll to the bottom
             container.scrollIntoView({ behavior: 'smooth' });
         }
+        if (retrievedDocs.lastIndexOf(messageCollectionRef).uid !== uid) {
+            popAlert.play();
+        }
+
     }, [retrievedDocs])
 
     // useEffect(() => {
@@ -115,6 +119,7 @@ function ChatRoom({ username }) {
             }
             await addDoc(messageCollectionRef, newMessage)
             setMessage('')
+            setMessageDelay()
         }
         catch (e) {
             console.log('Error sending message: ' + e)
@@ -122,7 +127,7 @@ function ChatRoom({ username }) {
     }
     
     async function sendMessage() {
-        if (message.length <= 250) {
+        if (message.length <= 250 && !isChatCooldown) {
         await handleSendMessage()
         }
     }
@@ -137,6 +142,33 @@ function ChatRoom({ username }) {
             }
         }
     };
+    useEffect(() => {
+        let delay = 3
+        if (isChatCooldown) {
+            const timer = setInterval(() => {
+                if (delay > 0) {
+                    setMessageDelay(delay--);
+                }
+                else {
+                    clearInterval(timer);
+                    setIsChatCooldown(false)
+                    document.querySelector('#messageForm').placeholder = "Write your message";
+                }
+            }, 1000)
+        return () => clearInterval(timer)
+        }
+    }, [isChatCooldown])
+
+    async function setMessageDelay(delay) {
+        setIsChatCooldown(true);
+        const messageForm = document.querySelector('#messageForm');
+        if (messageForm) {
+            if (delay === undefined) {
+                delay = 3
+            }
+            messageForm.placeholder = `${delay} seconds remaining`;
+        }
+    }
 
     return(
         <>
@@ -149,7 +181,6 @@ function ChatRoom({ username }) {
                     const isNewMessage = lastMessageId !== doc.id;
 
                     if (!isMyMessage && isNewMessage) {
-                        popAlert.play();
                         setLastMessageId(doc.id);
                     }
 
@@ -161,8 +192,8 @@ function ChatRoom({ username }) {
                 })}
             </div>
             <InputGroup className="">
-                <Form.Control onChange={(e) => setMessage(e.target.value)} value={message} onKeyDown={handleKeyDown} className='align-item-end' id='messageForm' type="text" placeholder="Write your Message" />
-                <Button onClick={sendMessage} className='btn-light'><span className="material-symbols-outlined mt-1">
+                <Form.Control onChange={(e) => setMessage(e.target.value)} value={message} onKeyDown={handleKeyDown} className='align-item-end' id='messageForm' disabled = {isChatCooldown} type="text" placeholder= 'Write your Message' />
+                <Button onClick={sendMessage} className='btn-light' id='sendBtn'><span className="material-symbols-outlined mt-1" disabled= {isChatCooldown}>
 send
 </span></Button>
             </InputGroup>
@@ -208,6 +239,8 @@ function getCurrentTime() {
     return `${hours}:${minutes} ${ampm}`
 
 }
+
+
 
 ChatRoom.propTypes = {
     username: PropTypes.string.isRequired,
