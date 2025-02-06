@@ -9,9 +9,9 @@ function Navigation({ onChangeView }) {
         <Navbar fluid id='navContainer' className='border-bottom py-2 sticky-top px-2 px-sm-4' expand="sm">
             <Container className='d-flex justify-content-between'>
                 <Navbar.Brand className='fw-semibold text-decoration-none text-light fs-5' href='#'>World Chat</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" className="text-white border-0"><span class="material-symbols-outlined">
-menu
-</span> </Navbar.Toggle>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" className="text-white border-0"><span className="material-symbols-outlined">
+                menu
+                </span> </Navbar.Toggle>
             </Container>
             <Navbar.Collapse id="basic-navbar-nav" className='text-end px-4'> 
                 <Nav className='ml-auto'> 
