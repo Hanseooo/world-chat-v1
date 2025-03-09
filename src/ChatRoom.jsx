@@ -8,8 +8,8 @@ import popAlertSound from './assets/pop-alert.mp3'
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, query, limit, orderBy, getDocs, addDoc } from "firebase/firestore";
+// import { getAnalytics } from "firebase/analytics";
+import { getFirestore, collection, query, orderBy, addDoc } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { Timestamp } from 'firebase/firestore';
 // TODO: Add SDKs for Firebase products that you want to use
@@ -18,18 +18,18 @@ import { Timestamp } from 'firebase/firestore';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCjF6jhiPxyXjS4AsWzqocOtyURDOVoRKs",
-  authDomain: "world-chat-v1.firebaseapp.com",
-  projectId: "world-chat-v1",
-  storageBucket: "world-chat-v1.firebasestorage.app",
-  messagingSenderId: "683846960091",
-  appId: "1:683846960091:web:0aefcdfe26222ba4a51dfe",
-  measurementId: "G-CHREZ14X9K"
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID,
+  measurementId: import.meta.env.VITE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// const analytics = getAnalytics(app);
 const db = getFirestore(app); // Initialize Firestore\
 const messageCollectionRef = collection(db, 'messages');
 
